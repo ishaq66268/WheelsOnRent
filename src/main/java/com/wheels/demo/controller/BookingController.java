@@ -24,9 +24,9 @@ public class BookingController {
         Booking booking = new Booking();
         booking.setUsername(username);
         booking.setVehicleType(vehicleType);
-        booking.setVehicleType(vehicleName); // ✅ fixed
+        booking.setVehicleName(vehicleName);   // ✅ fixed
         booking.setStartDate(LocalDate.parse(startDate));
-        booking.setEndDate(LocalDate.parse(endDate)); // ✅ fixed
+        booking.setEndDate(LocalDate.parse(endDate));
         bookingRepo.save(booking);
         return ResponseEntity.ok("Booking Confirmed");
     }

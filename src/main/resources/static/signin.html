@@ -1,50 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="signin.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wheels On Rent - Sign In</title>
+<link rel="stylesheet" href="signin.css">
 </head>
 <body>
-    <nav class="desktop-nav" >
-        <div class="logo">Wheels On Rent</div>
-        <div>
-            <ul class="nav-links" id="nav-links">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="booking.html">Booking</a></li>
-                <li><a href="contact.html">Contact</a></li>
-                <li><a href="aboutus.html">About us</a></li>
-            </ul>
-        </div>
-        <div class="button">
-            <button class="btn">Sign in</button>
-        </div>
-    </nav>
-    <div class="container">
-    <form id="loginForm">
-  <h2>Login</h2>
-  <input type="text" name="username" placeholder="Username" required />
-  <input type="password" name="password" placeholder="Password" required />
-  <button class="btnsign" type="submit">Login</button>
-  <p>Don't have an account? <a href="#" onclick="toggleForm()">Sign Up</a></p>
-</form>
-<p id="loginMessage" style="text-align: center; margin-bottom: 20px;"></p>
-
-<form id="signupForm" style="display: none;">
-  <h2>Sign Up</h2>
-  <input type="text" name="username" placeholder="Username" required />
-  <input type="password" name="password" placeholder="Password" required />
-  <button class="btnsign" type="submit">Sign Up</button>
-  <p>Already have an account? <a href="#" onclick="toggleForm()">Login</a></p>
-</form>
-<p id="signupMessage" style="text-align: center; margin-bottom: 20px;"></p>
+<nav class="desktop-nav">
+    <div class="logo">Wheels On Rent</div>
+    <div>
+        <ul class="nav-links" id="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="booking.html">Booking</a></li>
+            <li><a href="contact.html">Contact</a></li>
+            <li><a href="aboutus.html">About us</a></li>
+        </ul>
     </div>
-   <div class="details-container">
-        <p class="detail-paragraph">© 2025 Wheels On Rent. All rights reserved.<br>
-Quality Cars and Bikes for Your Every Journey.</p>
-            </div>
-            <script src="signin.js">
-            </script>
+    <div class="button">
+        <button class="btn">Sign in</button>
+    </div>
+</nav>
+
+<div class="container">
+    <!-- LOGIN FORM -->
+    <form id="loginForm">
+        <h2>Login</h2>
+        <input type="text" id="loginUsername" name="username" placeholder="Username" required />
+        <input type="password" id="loginPassword" name="password" placeholder="Password" required />
+        <button class="btnsign" type="submit">Login</button>
+        <p>Don't have an account? <a href="#" onclick="toggleForm()">Sign Up</a></p>
+    </form>
+    <p id="loginMessage" style="text-align: center; margin-bottom: 20px;"></p>
+
+    <!-- SIGNUP FORM -->
+    <form id="signupForm" style="display: none;">
+        <h2>Sign Up</h2>
+        <input type="text" id="signupUsername" name="username" placeholder="Username" required />
+        <input type="password" id="signupPassword" name="password" placeholder="Password" required />
+        <button class="btnsign" type="submit">Sign Up</button>
+        <p>Already have an account? <a href="#" onclick="toggleForm()">Login</a></p>
+    </form>
+    <p id="signupMessage" style="text-align: center; margin-bottom: 20px;"></p>
+</div>
+
+<div class="details-container">
+    <p class="detail-paragraph">
+        © 2025 Wheels On Rent. All rights reserved.<br>
+        Quality Cars and Bikes for Your Every Journey.
+    </p>
+</div>
+
+<script src="signin.js"></script>
 </body>
 </html>

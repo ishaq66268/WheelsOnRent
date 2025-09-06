@@ -1,48 +1,36 @@
+// signin.js (or inside a <script> on signin.html)
 document.addEventListener("DOMContentLoaded", () => {
-  // 🔄 Update Auth Button
-  const authBtn = document.getElementById("authBtn");
+  const loginForm = document.getElementById("loginForm"); // your form ID
 
-  if (authBtn) {
-    const user = localStorage.getItem("user");
+  if (loginForm) {
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
 
-    if (user) {
-      authBtn.textContent = "Logout";
-      authBtn.onclick = () => {
-        localStorage.removeItem("user");
-        window.location.href = "signin.html";
-      };
-    } else {
-      authBtn.textContent = "Sign in";
-      authBtn.onclick = () => {
-        window.location.href = "signin.html";
-      };
-    }
-  }
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
 
-  // 🔎 Search Filter
-  const search = document.getElementById("search");
-  if (search) {
-    search.addEventListener("input", function () {
-      const query = this.value.toLowerCase();
-      const bikes = document.querySelectorAll(".card-bikes");
-      const cars = document.querySelectorAll(".card-cars");
+      try {
+        const response = await fetch("http://localhost:8080/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ username, password }),
+        });
 
-      bikes.forEach(card => {
-        const name = card.querySelector(".bike-name").textContent.toLowerCase();
-        card.style.display = name.includes(query) ? "block" : "none";
-      });
-
-      cars.forEach(card => {
-        const name = card.querySelector(".car-name").textContent.toLowerCase();
-        card.style.display = name.includes(query) ? "block" : "none";
-      });
+        if (response.ok) {
+          const text = await response.text();
+          alert(text); // or redirect to dashboard
+          localStorage.setItem("user", username);
+          window.location.href = "index.html";
+        } else {
+          const err = await response.text();
+          alert("Login failed: " + err);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        alert("Server error. Check console.");
+      }
     });
   }
-
-  // 🚗 Book Now Buttons
-  document.querySelectorAll('.book-btn-bike, .book-btn-car').forEach(button => {
-    button.addEventListener('click', () => {
-      window.location.href = "booking.html";
-    });
-  });
 });

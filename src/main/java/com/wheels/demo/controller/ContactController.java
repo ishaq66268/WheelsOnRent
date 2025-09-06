@@ -7,19 +7,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class ContactController {
 
     @Autowired
     private ContactRepository contactRepo;
 
+    // Save contact message
     @PostMapping("/contact")
-    public ResponseEntity<String> submitContact(@RequestParam String name,
-                                                @RequestParam String email,
-                                                @RequestParam String message) {
-        Contact contact = new Contact();
-        contact.setName(name);
-        contact.setEmail(email);
-        contact.setMessage(message);
+    public ResponseEntity<String> submitContact(@RequestBody Contact contact) {
         contactRepo.save(contact);
         return ResponseEntity.ok("Message received. Thank you!");
     }
