@@ -1,5 +1,6 @@
 document.addEventListener("DOMContentLoaded", () => {
-  const BASE_URL = "http://localhost:8080"; // backend URL
+  // Change BASE_URL from localhost → Render backend
+  const BASE_URL = "https://wheelsonrent-0ml1.onrender.com"; 
 
   const loginForm = document.getElementById("loginForm");
   const signupForm = document.getElementById("signupForm");
