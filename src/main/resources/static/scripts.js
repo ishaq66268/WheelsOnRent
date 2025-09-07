@@ -1,36 +1,90 @@
-// signin.js (or inside a <script> on signin.html)
 document.addEventListener("DOMContentLoaded", () => {
-  const loginForm = document.getElementById("loginForm"); // your form ID
-
-  if (loginForm) {
-    loginForm.addEventListener("submit", async (e) => {
-      e.preventDefault();
-
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
-
-      try {
-        const response = await fetch("http://localhost:8080/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ username, password }),
-        });
-
-        if (response.ok) {
-          const text = await response.text();
-          alert(text); // or redirect to dashboard
-          localStorage.setItem("user", username);
-          window.location.href = "index.html";
-        } else {
-          const err = await response.text();
-          alert("Login failed: " + err);
-        }
-      } catch (error) {
-        console.error("Error:", error);
-        alert("Server error. Check console.");
-      }
+    // Sign in button
+    const authBtn = document.getElementById("authBtn");
+    authBtn.addEventListener("click", () => {
+        window.location.href = "signin.html"; // redirect to sign-in page
     });
+
+    // Book buttons
+    const bookBtns = document.querySelectorAll(".book-btn-bike, .book-btn-car");
+    bookBtns.forEach(btn => {
+        btn.addEventListener("click", () => {
+            if (!localStorage.getItem("user")) {
+                alert("Please sign in first!");
+            } else {
+                alert("Vehicle added to booking!");
+            }
+        });
+    });
+
+    // Contact form -> send to backend
+    const contactForm = document.getElementById("contactForm");
+    contactForm.addEventListener("submit", async e => {
+        e.preventDefault();
+
+        const formData = new FormData(contactForm);
+        const data = {
+            name: formData.get("name"),
+            email: formData.get("email"),
+            message: formData.get("message")
+        };
+
+        try {
+            const res = await fetch("http://localhost:8080/contact", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (res.ok) {
+                alert("Message sent successfully!");
+                contactForm.reset();
+            } else {
+                alert("Failed to send message.");
+            }
+        } catch (err) {
+            console.error("Error:", err);
+            alert("❌ Failed to fetch (check backend is running).");
+        }
+    });
+});
+document.addEventListener("DOMContentLoaded", () => {
+  const authBtn = document.getElementById("authBtn");
+  const user = localStorage.getItem("user");
+
+  if (authBtn) {
+    if (user) {
+      // Show first letter in a circle
+      authBtn.textContent = user.charAt(0).toUpperCase();
+      authBtn.style.width = "35px";
+      authBtn.style.height = "35px";
+      authBtn.style.borderRadius = "50%";
+      authBtn.style.textAlign = "center";
+      authBtn.style.lineHeight = "35px";
+      authBtn.style.fontWeight = "bold";
+      authBtn.style.backgroundColor = "#007bff";
+      authBtn.style.color = "white";
+      authBtn.style.cursor = "pointer";
+
+      // Optional: Click to log out
+      authBtn.addEventListener("click", () => {
+        localStorage.removeItem("user");
+        window.location.href = "signin.html";
+      });
+    } else {
+      // Default: show "Sign in" button
+      authBtn.textContent = "Sign in";
+      authBtn.style.width = "";
+      authBtn.style.height = "";
+      authBtn.style.borderRadius = "";
+      authBtn.style.backgroundColor = "";
+      authBtn.style.color = "";
+      authBtn.style.cursor = "pointer";
+      authBtn.addEventListener("click", () => {
+        window.location.href = "signin.html";
+      });
+    }
   }
 });

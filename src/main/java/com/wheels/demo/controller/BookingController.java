@@ -1,6 +1,7 @@
 package com.wheels.demo.controller;
 
-import java.time.LocalDate;
+import java.util.Collections;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,24 +11,16 @@ import com.wheels.demo.model.Booking;
 import com.wheels.demo.repository.BookingRepository;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class BookingController {
 
     @Autowired
     private BookingRepository bookingRepo;
 
+    // ✅ POST: Save booking
     @PostMapping("/book")
-    public ResponseEntity<String> book(@RequestParam String username,
-                                       @RequestParam String vehicleType,
-                                       @RequestParam String vehicleName,
-                                       @RequestParam String startDate,
-                                       @RequestParam String endDate) {
-        Booking booking = new Booking();
-        booking.setUsername(username);
-        booking.setVehicleType(vehicleType);
-        booking.setVehicleName(vehicleName);   // ✅ fixed
-        booking.setStartDate(LocalDate.parse(startDate));
-        booking.setEndDate(LocalDate.parse(endDate));
+    public ResponseEntity<Map<String, String>> book(@RequestBody Booking booking) {
         bookingRepo.save(booking);
-        return ResponseEntity.ok("Booking Confirmed");
+        return ResponseEntity.ok(Collections.singletonMap("message", "Booking Confirmed"));
     }
 }

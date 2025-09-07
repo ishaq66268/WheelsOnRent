@@ -211,3 +211,11 @@ body {
     background-color: rgb(224, 224, 224);
     margin-top: auto;
 }
+#authBtn {
+    font-family: Arial, sans-serif;
+    border: none;
+    outline: none;
+    background-color: black !important;  /* force black background */
+    color: white !important; 
+}
+

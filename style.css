@@ -481,10 +481,3 @@ button:hover:after {
     text-align: center;
     background-color: rgb(224, 224, 224);
 }
-#authBtn {
-    font-family: Arial, sans-serif;
-    border: none;
-    outline: none;
-    background-color: black !important;  /* force black background */
-    color: white !important; 
-}

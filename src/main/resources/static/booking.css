@@ -187,3 +187,10 @@ button:hover:after {
   border: 2px solid #ccc;
   margin: 10px 0;
 }
+#authBtn {
+    font-family: Arial, sans-serif;
+    border: none;
+    outline: none;
+    background-color: black !important;  /* force black background */
+    color: white !important; 
+}

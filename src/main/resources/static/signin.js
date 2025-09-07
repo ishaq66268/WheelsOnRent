@@ -1,23 +1,38 @@
+console.log("signin.js loaded");
+
 document.addEventListener("DOMContentLoaded", () => {
-  // Change BASE_URL from localhost → Render backend
-  const BASE_URL = "https://wheelsonrent-0ml1.onrender.com"; 
+  const BASE_URL = "http://localhost:8080";
 
   const loginForm = document.getElementById("loginForm");
   const signupForm = document.getElementById("signupForm");
   const loginMsg = document.getElementById("loginMessage");
   const signupMsg = document.getElementById("signupMessage");
+  const authBtn = document.getElementById("authBtn");
+
+  // Update nav button if user is already logged in
+  const loggedUser = localStorage.getItem("user");
+  if (loggedUser && authBtn) {
+    authBtn.textContent = loggedUser.charAt(0).toUpperCase();
+    authBtn.classList.add("user-circle");
+  }
+
+  // Nav "Sign in" button
+  if (authBtn && !loggedUser) {
+    authBtn.addEventListener("click", () => {
+      window.location.href = "signin.html";
+    });
+  }
 
   // POST request helper
   async function postData(url, data) {
     const res = await fetch(url, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(data)
+      body: JSON.stringify(data),
     });
-
-    const text = await res.text();
-    if (!res.ok) throw new Error(text || "Server error");
-    return text;
+    const json = await res.json();
+    if (!res.ok) throw new Error(json.message || "Server error");
+    return json.message;
   }
 
   // LOGIN
@@ -27,15 +42,22 @@ document.addEventListener("DOMContentLoaded", () => {
       loginMsg.style.color = "black";
       loginMsg.textContent = "⏳ Logging in...";
 
+      const username = document.getElementById("loginUsername").value.trim();
+      const password = document.getElementById("loginPassword").value.trim();
+
       try {
-        const msg = await postData(`${BASE_URL}/login`, {
-          username: loginForm.username.value.trim(),
-          password: loginForm.password.value.trim()
-        });
+        await postData(`${BASE_URL}/login`, { username, password });
+        localStorage.setItem("user", username);
+
+        // Update nav button
+        if (authBtn) {
+          authBtn.textContent = username.charAt(0).toUpperCase();
+          authBtn.classList.add("user-circle");
+        }
+
         loginMsg.style.color = "green";
-        loginMsg.textContent = "✅ " + msg;
-        localStorage.setItem("user", loginForm.username.value.trim());
-        setTimeout(() => window.location.href = "index.html", 1500);
+        loginMsg.textContent = "✅ Logged in!";
+        setTimeout(() => (window.location.href = "index.html"), 1000);
       } catch (err) {
         loginMsg.style.color = "red";
         loginMsg.textContent = "❌ " + err.message;
@@ -50,17 +72,17 @@ document.addEventListener("DOMContentLoaded", () => {
       signupMsg.style.color = "black";
       signupMsg.textContent = "⏳ Registering...";
 
+      const username = document.getElementById("signupUsername").value.trim();
+      const password = document.getElementById("signupPassword").value.trim();
+
       try {
-        const msg = await postData(`${BASE_URL}/register`, {
-          username: signupForm.username.value.trim(),
-          password: signupForm.password.value.trim()
-        });
+        await postData(`${BASE_URL}/register`, { username, password });
         signupMsg.style.color = "green";
-        signupMsg.textContent = "✅ " + msg;
+        signupMsg.textContent = "✅ Registered!";
         setTimeout(() => {
           signupMsg.textContent = "";
           toggleForm();
-        }, 1500);
+        }, 1000);
       } catch (err) {
         signupMsg.style.color = "red";
         signupMsg.textContent = "❌ " + err.message;
@@ -69,18 +91,13 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-// Toggle between login & signup
+// Toggle login/signup forms
 function toggleForm() {
   const loginForm = document.getElementById("loginForm");
   const signupForm = document.getElementById("signupForm");
   document.getElementById("loginMessage").textContent = "";
   document.getElementById("signupMessage").textContent = "";
 
-  if (loginForm.style.display === "none") {
-    loginForm.style.display = "block";
-    signupForm.style.display = "none";
-  } else {
-    loginForm.style.display = "none";
-    signupForm.style.display = "block";
-  }
+  loginForm.style.display = loginForm.style.display === "none" ? "block" : "none";
+  signupForm.style.display = signupForm.style.display === "none" ? "block" : "none";
 }
