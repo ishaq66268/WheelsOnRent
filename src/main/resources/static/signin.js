@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         loginMsg.style.color = "green";
         loginMsg.textContent = "✅ Logged in!";
-        setTimeout(() => (window.location.href = "index.html"), 1000);
+        setTimeout(() => (window.location.href = `${BASE_URL}/demo/index.html`), 1000);
       } catch (err) {
         loginMsg.style.color = "red";
         loginMsg.textContent = "❌ " + err.message;

@@ -1,8 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
+  const BASE_URL = "http://localhost:8080";
+
     // Sign in button
     const authBtn = document.getElementById("authBtn");
     authBtn.addEventListener("click", () => {
-        window.location.href = "signin.html"; // redirect to sign-in page
+        window.location.href = "http://127.0.0.1:5500/demo/signin.html"; // redirect to sign-in page
     });
 
     // Book buttons
@@ -30,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         try {
-            const res = await fetch("http://localhost:8080/contact", {
+            const res = await fetch(`${BASE_URL}/contact`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -64,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
       authBtn.style.textAlign = "center";
       authBtn.style.lineHeight = "35px";
       authBtn.style.fontWeight = "bold";
-      authBtn.style.backgroundColor = "#007bff";
+      authBtn.style.backgroundColor = "black";
       authBtn.style.color = "white";
       authBtn.style.cursor = "pointer";
 

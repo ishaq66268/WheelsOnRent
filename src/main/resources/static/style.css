@@ -58,45 +58,57 @@ a:hover{
 .logo:hover{
     transform: scale(1.1);
 }
-/* sign in button*/
-.btn {
- width: 4.5em;
- height: 2.3em;
- margin: 0.5em;
- background: black;
- color: white;
- border: none;
- border-radius: 0.625em;
- font-size: 20px;
- font-weight: bold;
- cursor: pointer;
- position: relative;
- z-index: 1;
- overflow: hidden;
+/* Circle container */
+.button {
+    width: 2em;
+    height: 2.3em;
+    background: black;
+    text-align: center;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
 }
 
-button:hover {
- color: black;
+/* Anchor styled like a button */
+.button a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    line-height: 2.3em;
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 14px;
+    position: relative;
+    z-index: 1;
+    text-align: center;
 }
 
-button:after {
- content: "";
- background: white;
- position: absolute;
- z-index: -1;
- left: -20%;
- right: -20%;
- top: 0;
- bottom: 0;
- transform: skewX(-45deg) scale(0, 1);
- transition: all 0.5s;
+/* Hover effect */
+.button a::after {
+    content: "";
+    background: white;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: -20%;
+    right: -20%;
+    transform: skewX(-45deg) scale(0, 1);
+    z-index: -1;
+    transition: all 0.5s;
 }
 
-button:hover:after {
- transform: skewX(-45deg) scale(1, 1);
- -webkit-transition: all 0.5s;
- transition: all 0.5s;
+.button a:hover {
+    color: black;
 }
+
+.button a:hover::after {
+    transform: skewX(-45deg) scale(1, 1);
+}
+
 /*section*/
 /* .home-input{
     display: flex;
@@ -481,10 +493,10 @@ button:hover:after {
     text-align: center;
     background-color: rgb(224, 224, 224);
 }
-#authBtn {
+/* #authBtn {
     font-family: Arial, sans-serif;
     border: none;
     outline: none;
-    background-color: black !important;  /* force black background */
+    background-color: black !important;
     color: white !important; 
-}
+} */
