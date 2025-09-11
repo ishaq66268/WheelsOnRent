@@ -12,26 +12,34 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())
             .authorizeHttpRequests(auth -> auth
-                // Allow frontend static resources
+                // Allow frontend HTML pages
                 .requestMatchers(
                     "/", 
                     "/index.html", 
                     "/signin.html", 
                     "/booking.html", 
                     "/contact.html", 
-                    "/aboutus.html", 
-                    "/**/*.css", 
-                    "/**/*.js", 
-                    "/**/*.png", 
-                    "/**/*.jpg", 
-                    "/**/*.jpeg", 
-                    "/**/*.gif"
+                    "/aboutus.html"
                 ).permitAll()
 
-                // Allow backend endpoints
-                .requestMatchers("/register", "/login", "/book", "/bookings", "/contact").permitAll()
+                // Allow static resources (CSS, JS, images, etc.)
+                .requestMatchers(
+                    "/static/**", 
+                    "/images/**", 
+                    "/css/**", 
+                    "/js/**"
+                ).permitAll()
 
-                // Everything else will still require auth (if you add later)
+                // Allow backend APIs
+                .requestMatchers(
+                    "/register", 
+                    "/login", 
+                    "/book", 
+                    "/bookings", 
+                    "/contact"
+                ).permitAll()
+
+                // Everything else
                 .anyRequest().permitAll()
             );
 

@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // const BASE_URL = "http://localhost:8080";
+  const BASE_URL = "https://wheelsonrent-0ml1.onrender.com";
+
+
   const bookingForm = document.getElementById("bookingForm");
   const vehicleSelect = document.getElementById("vehicleType");
   const modelSelect = document.getElementById("vehicleName");
@@ -45,7 +49,6 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   modelSelect.addEventListener("change", updatePreview);
-
   bookingForm.addEventListener("submit", function (e) {
     e.preventDefault();
 
@@ -56,29 +59,34 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const bookingData = {
-      name: document.getElementById("username").value,
+      username: document.getElementById("username").value,
       vehicleType: vehicleSelect.value,
-      model: modelSelect.value,
-      date: document.getElementById("startDate").value,
+      vehicleName: modelSelect.value,
+      startDate: document.getElementById("startDate").value,
       endDate: document.getElementById("endDate").value,
-      paymentMethod: document.getElementById("payment").value,
+      paymentMethod: document.getElementById("payment").value
     };
 
-    let allBookings = JSON.parse(localStorage.getItem("bookings")) || [];
-    allBookings.push(bookingData);
-    localStorage.setItem("bookings", JSON.stringify(allBookings));
-
-    alert("✅ Booking confirmed!\n\n" +
-      `Name: ${bookingData.name}\n` +
-      `Vehicle: ${bookingData.vehicleType} - ${bookingData.model}\n` +
-      `Start: ${bookingData.date}\n` +
-      `End: ${bookingData.endDate}\n` +
-      `Payment: ${bookingData.paymentMethod}`
-    );
-
-    bookingForm.reset();
-    previewImage.src = "";
+    // Send booking to backend
+    fetch(`${BASE_URL}/book`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(bookingData)
+    })
+      .then(response => response.json())
+      .then(data => {
+        alert(`✅ ${data.message}`);
+        bookingForm.reset();
+        previewImage.src = "";
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        alert("❌ Failed to save booking. Try again.");
+      });
   });
+
 });
 document.addEventListener("DOMContentLoaded", () => {
   const authBtn = document.getElementById("authBtn");

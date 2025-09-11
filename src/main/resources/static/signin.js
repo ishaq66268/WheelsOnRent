@@ -1,7 +1,9 @@
 console.log("signin.js loaded");
 
 document.addEventListener("DOMContentLoaded", () => {
-  const BASE_URL = "http://localhost:8080";
+  // const BASE_URL = "http://localhost:8080";
+  const BASE_URL = "https://wheelsonrent-0ml1.onrender.com";
+  const FRONTEND_URL = "https://ishaq66268.github.io/WheelsOnRent"
 
   const loginForm = document.getElementById("loginForm");
   const signupForm = document.getElementById("signupForm");
@@ -57,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         loginMsg.style.color = "green";
         loginMsg.textContent = "✅ Logged in!";
-        setTimeout(() => (window.location.href = `${BASE_URL}/demo/index.html`), 1000);
+        setTimeout(() => (window.location.href = `${FRONTEND_URL}/index.html`), 1000);
       } catch (err) {
         loginMsg.style.color = "red";
         loginMsg.textContent = "❌ " + err.message;

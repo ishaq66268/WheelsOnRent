@@ -3,7 +3,7 @@ package com.wheels.demo.model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "users")
+@Document(collection = "user")
 public class User {
 
     @Id
